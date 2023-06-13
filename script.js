@@ -66,10 +66,11 @@ function ronda(seleccionJugador,seleccionOrdenador){
 
     return resultado;
 }
+
 let puntuacionJugador = 0, puntuacionOrdenador = 0;
 
 
-for(let i = 0; i < 2; i++){
+for(let i = 0; i < 3; i++){
     const seleccionJugador = prompt("¿Eliges piedra, papel o tijeras?").toLowerCase();
     alert(ronda(seleccionJugador,getComputerChoice()));
 }
