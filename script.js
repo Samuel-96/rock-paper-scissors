@@ -1,3 +1,12 @@
+const img = document.querySelectorAll(".imagen");
+const puntJugador = document.getElementsByClassName("resultado-jugador");
+const puntOrdenador = document.getElementsByClassName("resultado-ordenador");
+const container = document.getElementsByClassName("contenedor-resultados");
+const resP = document.getElementById("resultado-j");
+const resO = document.getElementById("resultado-o");
+
+let puntuacionJugador = 0, puntuacionOrdenador = 0, contTurnos = 0;
+
 function numAzar(){
     let num = Math.floor((Math.random() * 3)) + 1; //numero al azar entre 1 y 3 gracias al + 1
     return num;
@@ -18,7 +27,7 @@ function getComputerChoice(){
 
 function ronda(seleccionJugador,seleccionOrdenador){
     let resultado;
-    
+
     switch(seleccionJugador)
     {
         case "piedra": 
@@ -35,7 +44,7 @@ function ronda(seleccionJugador,seleccionOrdenador){
             }
             break;
 
-        case "tijeras": 
+        case "tijera": 
             if(seleccionOrdenador === "piedra"){
                 resultado = "Eleccion del jugador: " + seleccionJugador + "\nEleccion del ordenador: " + seleccionOrdenador + "\nResultado: Gana el ordenador";
                 puntuacionOrdenador++;
@@ -67,12 +76,45 @@ function ronda(seleccionJugador,seleccionOrdenador){
     return resultado;
 }
 
-let puntuacionJugador = 0, puntuacionOrdenador = 0;
+function actualizarResultados(){
+
+    contTurnos++;
+    if(contTurnos <= 5){
+
+    resP.textContent = puntuacionJugador;
+    resO.textContent = puntuacionOrdenador;
+
+    if(puntuacionJugador > puntuacionOrdenador) {
+        resP.style.color = "green";
+        resO.style.color = "";
+    }
+    else if(puntuacionJugador < puntuacionOrdenador) {
+        resO.style.color = "green";
+        resP.style.color = "";
+    }
+    else {
+        resP.style.color = "";
+        resO.style.color = "";
+    }
 
 
-for(let i = 0; i < 3; i++){
-    const seleccionJugador = prompt("¿Eliges piedra, papel o tijeras?").toLowerCase();
-    alert(ronda(seleccionJugador,getComputerChoice()));
+
+    console.log(puntuacionJugador + "\n" + puntuacionOrdenador);
+    }
+
+}   
+
+function obtenerSeleccionJugador(e){
+   
+    let eleccionJugador = e.target.classList[0];
+
+    console.log(ronda(eleccionJugador,getComputerChoice()));
+
+    actualizarResultados();
 }
 
-alert("-----------Puntuacion final-----------"+"\n\n\tJUGADOR: " + puntuacionJugador + "\n\tORDENADOR: " + puntuacionOrdenador);
+
+
+img.forEach(img => img.addEventListener("click", obtenerSeleccionJugador));
+
+//alert("-----------Puntuacion final-----------"+"\n\n\tJUGADOR: " + puntuacionJugador + "\n\tORDENADOR: " + puntuacionOrdenador);
